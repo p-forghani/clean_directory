@@ -5,12 +5,13 @@ from pathlib import Path
 from typing import Union
 
 from loguru import logger
+from tqdm import tqdm
 
 from src.data import DATA_DIR
 
 
 class CleanDirectory:
-    def __init__(self, DIR_PATH: Union(str, Path)) -> None:
+    def __init__(self, DIR_PATH: Union[str, Path]) -> None:
         """
         Initializes the CleanDirectory object.
 
@@ -30,10 +31,10 @@ class CleanDirectory:
 
     def organize_files(self) -> None:
         """
-        Organizes files in the directory based on their 
+        Organizes files in the directory based on their
         extensions and moves them to appropriate folders.
         """
-        for file_path in self.directory.iterdir():
+        for file_path in tqdm(self.directory.iterdir(), position=0):
             # Ignore directories
             if file_path.is_dir():
                 continue
@@ -49,6 +50,6 @@ class CleanDirectory:
 
 if __name__ == "__main__":
     # Example usage:
-    path = Path('path to the directory')
+    path = Path('PATH/TO/DIRECTORY')
     cleaner = CleanDirectory(path)
     cleaner.organize_files()
