@@ -1,5 +1,6 @@
 import json
 import shutil
+import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Union
@@ -49,7 +50,13 @@ class CleanDirectory:
             logger.info(f'{file_path.name} moved to the {self.file_map[file_path.suffix]} folder.')
 
 if __name__ == "__main__":
-    # Example usage:
-    path = Path('PATH/TO/DIRECTORY')
-    cleaner = CleanDirectory(path)
-    cleaner.organize_files()
+    try:
+        # Get the path to directory form the user
+        path = Path(sys.argv[1])
+    except:
+        # Raise error if input is not path
+        raise TypeError('The input is not a path!')
+    else:
+        # Organize the directory if there is no error
+        cleaner = CleanDirectory(path)
+        cleaner.organize_files()
